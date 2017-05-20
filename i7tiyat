@@ -1,0 +1,505 @@
+<div class="cd-quick-view">
+        <div class="cd-slider-wrapper">
+            <ul class="cd-slider">
+                <li class="selected"><img src="{{ ifImg( $builItem->img ) }}" alt="Product 1"></li>
+                
+            </ul> <!-- cd-slider -->
+
+            <ul class="cd-slider-navigation">
+                <li><a class="cd-next" href="">السابق</a></li>
+                <li><a class="cd-prev" href="">التالي</a></li>
+            </ul> <!-- cd-slider-navigation -->
+        </div> <!-- cd-slider-wrapper -->
+
+        <div class="cd-item-info overflow-yScroll">
+            <h2>{{ $builItem->name  }}</h2>
+            <h3 class="price">{{ $builItem->price  }} درهم</h3>
+            <p>{{ $builItem->largDisc }}</p>
+            <h5 class="price">مكان العقار: <span>{{ buildingPlace( $builItem->codePostalMaroc ) }}</span></h5>
+            <h5 class="price">نوع العقار: <span>{{ buildingRent( $builItem->rent ) }}</span></h5>
+            <h5 class="price">مساحة العقار: <span>{{ $builItem->square }} متر مربع</span></h5>
+            <h5 class="price">عدد الغرف: <span>{{ $builItem->roomNumber }} غرفة</span></h5>
+            <h5 class="price">انوع الخدمة: <span>{{ buildingType( $builItem->type ) }}</span></h5>
+            <h5 class="price">تاريخ النشر: <span>{{ $builItem->created_at }}</span></h5>
+            <h5 class="price">إسم الناشر: <span>{{ getUser( $builItem->user_id )  }}</span></h5>
+
+
+            <ul class="cd-item-action">
+                <li><a href="{{ route('buildings.show', $builItem->id) }}"><button class="add-to-cart">نظرة شاملة</button></a></li>                   
+                <li></li> 
+
+            </ul> <!-- cd-item-action -->
+        </div> <!-- cd-item-info -->
+        <a href="" class="cd-close">Close</a>
+    </div> <!-- cd-quick-view -->
+
+
+
+
+
+
+foreach ( $reqToArray  as $key => $request ) {
+        # code...
+
+        /*
+        store a site seting where the nameSetting  = $key // LIKE إسم_الموقع
+
+        */
+
+
+
+        $temp = $siteSetting->where( 'slug', $key )->first();
+
+        
+                  
+
+              }else if( $key != 'no-image' || $key != 'slider-img'){
+
+
+                $temp->fill([
+                'value' => $request
+              ])->save();
+
+              }
+
+              $temp = null;
+        }
+      
+
+      
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+{{ csrf_field() }}
+
+
+{!! Form::hidden('from', $from) !!}
+
+
+@if( isset( $b ) )
+
+    <div class="text-center">
+
+            <img src="{{ ifImg( $b->img ) }}" class="img-responsive heightXL imgCenter" />
+
+
+    </div>
+
+@endif
+
+
+
+<div class="form-group{{ $errors->has('img') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('img', 'صورة القطعة الميكانيكية', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::file('img', null, ['class' => 'form-control']) !!}
+
+        @if ($errors->has('img'))
+            <span class="help-block">
+                <strong>{{ $errors->first('img') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+
+
+<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('name', 'إسم القطعة الميكانيكية', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::text('name', old('name'), ['class' => 'form-control', 'required' => true, 'autofocus' => true ]) !!}
+
+        @if ($errors->has('name'))
+            <span class="help-block">
+                <strong>{{ $errors->first('name') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('price', 'ثمن القطعة الميكانيكية', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::number('price', old('price'), ['class' => 'form-control', 'required' => true]) !!}
+
+        @if ($errors->has('price'))
+            <span class="help-block">
+                <strong>{{ $errors->first('price') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+    
+@if( Route::currentRouteName() == 'buildings.edit' )
+
+    <?php
+
+    $thing_id_Selected = getSelectedItemInThing( $idHelper );
+    
+    $car_id_Selected = getSelectedItemInCar( $idHelper );
+    
+    $area_id_Selected = getSelectedItemInArea( $idHelper );
+    
+    ?>
+
+@endif
+
+
+
+<div class="form-group{{ $errors->has('thing_id') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('thing_id', 'نوع القطعة الميكانيكية', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+
+        {!! 
+        \App\Thing::attr(['name' => 'thing_id', 'id' => 'thing_id', 'class' => 'form-control select2R','size' => 20,'value' => old('thing_id'), 'required' => true])
+        ->selected( $thing_id_Selected )
+        ->renderAsDropdown() 
+        !!}
+
+        @if ($errors->has('thing_id'))
+            <span class="help-block">
+                <strong>{{ $errors->first('thing_id') }}</strong>
+            </span>
+        @endif
+    </div>
+    
+</div>
+
+<div class="form-group{{ $errors->has('rent') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('rent', 'حالة القطعة الميكانيكية', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+    {!! Form::select('rent', thingRent( -1 ) , old('rent') , ['class' => 'form-control select2R', 'required' => true] ) !!}
+
+        @if ($errors->has('rent'))
+            <span class="help-block">
+                <strong>{{ $errors->first('rent') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group{{ $errors->has('car_id') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('car_id', 'نوع المركبة', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+
+        {!! 
+        \App\Car::attr(['name' => 'car_id', 'id' => 'car_id', 'class' => 'form-control select2R','size' => 20,'value' => old('car_id'), 'required' => true])
+        ->selected( $car_id_Selected )
+        ->renderAsDropdown() 
+        !!}
+
+        @if ($errors->has('car_id'))
+            <span class="help-block">
+                <strong>{{ $errors->first('car_id') }}</strong>
+            </span>
+        @endif
+    </div>
+    
+</div>
+
+
+
+
+<div class="form-group{{ $errors->has('largDisc') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('largDisc', 'عن العقار', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::textarea('largDisc', old('largDisc'), ['class' => 'form-control', 'required' => true]) !!}
+
+        @if ($errors->has('largDisc'))
+            <span class="help-block">
+                <strong>{{ $errors->first('largDisc') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group{{ $errors->has('tags') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('tags', 'كلمات دلالية', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::textarea('tags', old('tags'), ['class' => 'form-control', 'required' => true]) !!}
+
+        @if ($errors->has('tags'))
+            <span class="help-block">
+                <strong>{{ $errors->first('tags') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+
+<div class="form-group{{ $errors->has('lang') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('lang', 'خط الطول', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::number('lang', old('lang'), ['class' => 'form-control', 'required' => true]) !!}
+
+        @if ($errors->has('lang'))
+            <span class="help-block">
+                <strong>{{ $errors->first('lang') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group{{ $errors->has('lat') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('lat', 'خط العرض', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::number('lat', old('lat'), ['class' => 'form-control', 'required' => true]) !!}
+
+        @if ($errors->has('lat'))
+            <span class="help-block">
+                <strong>{{ $errors->first('lat') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+@unless( $from == 'website' )
+<div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('status', 'تفعيل', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+    {!! Form::select('status', thingStatu( -1 ) , old('status') , ['class' => 'form-control select2R', 'required' => true] ) !!}
+
+        @if ($errors->has('status'))
+            <span class="help-block">
+                <strong>{{ $errors->first('status') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+@endunless
+
+
+
+
+
+
+<div class="form-group{{ $errors->has('area_id') ? ' has-error' : '' }}">
+    
+
+    
+    {!! Form::label('area_id', 'نوع المركبة', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+
+        {!! 
+        \App\Area::attr(['name' => 'area_id', 'id' => 'area_id', 'class' => 'form-control select2R','size' => 20,'value' => old('area_id'), 'required' => true])
+        ->selected( $area_id_Selected )
+        ->renderAsDropdown() 
+        !!}
+
+        @if ($errors->has('area_id'))
+            <span class="help-block">
+                <strong>{{ $errors->first('area_id') }}</strong>
+            </span>
+        @endif
+    </div>
+    
+</div>
+
+
+
+<div class="form-group">
+    <div class="col-md-6 col-md-offset-4">
+        {!! Form::submit( $button , ['class' => 'btn btn-primary btn-block']) !!}
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{!! Form::open(['route' => 'search']) !!}
+
+          {{ csrf_field() }}
+
+            <ul class="inDeco">
+            
+              
+              <li class="">
+                {!! Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => 'إسم القطعة' ]) !!}
+                @if ($errors->has('name'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('name') }}</strong>
+                    </span>
+                @endif
+              </li>
+
+
+
+              <li class="">
+                {!! Form::number('priceFrom', old('priceFrom'), ['class' => 'form-control', 'placeholder' => 'ثمن: إبتداءا من']) !!}
+                {!! Form::number('priceTo', old('priceTo'), ['class' => 'form-control', 'placeholder' => 'ثمن: أقل من']) !!}
+
+                @if ($errors->has('priceFrom'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('priceFrom') }}</strong>
+                    </span>
+                @endif
+
+                @if ($errors->has('priceTo'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('priceTo') }}</strong>
+                    </span>
+                @endif
+              </li>
+
+              <li class="">
+                {!!
+                \App\Thing::attr(['name' => 'thing_id', 'id' => 'thing_id', 'class' => 'form-control select2R','size' => 20,'value' => old('thing_id'), 'placeholder' => 'نوع القطعة الميكانيكية'])
+                ->selected( null )
+                ->renderAsDropdown() !!}
+
+
+                @if ($errors->has('thing_id'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('thing_id') }}</strong>
+                    </span>
+                @endif
+
+              </li>
+
+              <li class="">
+                {!!
+                \App\Car::attr(['name' => 'car_id', 'id' => 'car_id', 'class' => 'form-control select2R','size' => 20,'value' => old('car_id'), 'placeholder' => 'hglركبة المناسبة للقطعة'])
+                ->selected( null )
+                ->renderAsDropdown() !!}
+
+
+                @if ($errors->has('thing_id'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('thing_id') }}</strong>
+                    </span>
+                @endif
+
+              </li>
+
+              <li class="">
+
+              
+              {!! Form::select('rent', thingRent( -1 ) , old('rent') , ['class' => 'form-control select2R2', 'placeholder' =>  'حالة القطعة الميكانيكية' ] ) !!}
+
+              @if ($errors->has('rent'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('thing_id') }}</strong>
+                    </span>
+              @endif
+
+              </li>
+
+
+
+              <li class="">
+                {!!
+                \App\Area::attr(['name' => 'area_id', 'id' => 'area_id', 'class' => 'form-control select2R','size' => 20,'value' => old('area_id'), 'placeholder' => 'مكان تواجد القطعة الميكانيكية'])
+                ->selected( null )
+                ->renderAsDropdown() !!}
+
+
+                @if ($errors->has('area_id'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('area_id') }}</strong>
+                    </span>
+                @endif
+
+              </li>
+
+              <li class="active">
+                {!! Form::number('langFrom', old('langFrom'), ['class' => 'form-control', 'placeholder' => 'خط الطول: إبتداءا من']) !!}
+                {!! Form::number('langTo', old('langTo'), ['class' => 'form-control', 'placeholder' => 'خط الطول: أقل إحداثية']) !!}
+
+                @if ($errors->has('langFrom'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('langFrom') }}</strong>
+                    </span>
+                @endif
+
+                @if ($errors->has('langTo'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('langTo') }}</strong>
+                    </span>
+                @endif
+              </li>
+              <li class="active">
+                {!! Form::number('latFrom', old('latFrom'), ['class' => 'form-control', 'placeholder' => 'خط العرض: إبتداءا من']) !!}
+                {!! Form::number('latTo', old('latTo'), ['class' => 'form-control', 'placeholder' => 'خط العرض: أقل إحداثية']) !!}
+
+                @if ($errors->has('latFrom'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('latFrom') }}</strong>
+                    </span>
+                @endif
+
+                @if ($errors->has('latTo'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('latTo') }}</strong>
+                    </span>
+                @endif
+              </li>
+              <li>
+              {!! Form::submit('إبحث' , ['class' => 'btn btn-primary btn-block', 'name' => 'ok']) !!}
+              </li>
+
+
+          </ul>
+
+          {!! Form::close() !!}
+
+

@@ -1,0 +1,69 @@
+vagrant@homestead:~/Code/building$ php artisan db:seed --class=UserTableSeedervagrant@homestead:~/Code/building$ php artisan db:seed --class=BuildingTableSeeder
+vagrant@homestead:~/Code/building$ php artisan db:seed --class=ContactSeeding
+vagrant@homestead:~/Code/building$ php artisan db:seed --class=ReplyTableSeeder
+vagrant@homestead:~/Code/building$ php artisan db:seed --class=SiteSettingsSeeder
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+laravelcollective
+debugbar
+
+
+
+------------
+        'mysql' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'building'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', 'islam022'),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+        
+--------------
+editing the .env
+
+------
+
+
+
+
+
+
+
+
+composer.json
+    file
+
+
+    autoloading the helper.php
+
+
+
+
+composer require fzaninotto/faker
+
+
+
+Reply
+
+public function reply()
+    {
+        return $this->hasOne('App\Reply', 'useID');
+    }
+
+$var->contact->name
+
+
+
